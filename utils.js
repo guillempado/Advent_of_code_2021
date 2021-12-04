@@ -2,7 +2,7 @@ const fs = require('fs');
 const rl = require('readline');
 
 
-const readLine = async (filename, callback) => {
+const readLines = async (filename, callback) => {
     return new Promise((resolve, reject) => {
         const stream = fs.createReadStream(filename);
         const reader = rl.createInterface({input: stream});
@@ -34,5 +34,5 @@ const makeFixedSizeQueue = (length) => {
 }
 
 module.exports = {
-    readLine, makeFixedSizeQueue
+    readLines, makeFixedSizeQueue
 }

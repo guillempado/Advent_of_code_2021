@@ -1,5 +1,5 @@
 
-const {readLine} = require('../utils');
+const {readLines} = require('../utils');
 const filename = './input.txt';
 
 const part1 = async () => {
@@ -7,7 +7,7 @@ const part1 = async () => {
     let count = 0;
 
     // Omple count i digits
-    await readLine(filename, line => {
+    await readLines(filename, line => {
         // Suma cops que digits son 1
         for(let i = 0; i < 12; i++){
             if(line[i] == '1'){
@@ -45,7 +45,7 @@ const part2 = async () => {
 
     // Com que he fer més d'una passada sobre l'array original i només té 1000 línies, el carrego sencer en memòria
     let file = [];
-    await readLine(filename, line => {
+    await readLines(filename, line => {
         file.push(line);
     });
 
