@@ -83,7 +83,12 @@ const sumUnmarkedNumbers = (cardboard, solution) => {
     return sum;
 }
 
-const getGameScore = (game) => {
+const GameMode = {
+    part1: "Part1",
+    part2: "Part2"
+}
+
+const getGameScore = (game, gameMode) => {
 
     // Data Structure on anar marcant true quan un cardboard tingui un número que coincideixi amb un drawnNumber
     let solutions = [];
@@ -100,16 +105,28 @@ const getGameScore = (game) => {
 
     // Game loop
     let sum;
+    let won = new Array(game.carboards.length).fill(false);
     for (const drawnNumber of game.drawnNumbers) {
         for (let i = 0; i < game.carboards.length; i++) {
+            if(gameMode === GameMode.part2 && won[i]){
+                continue;
+            }
             if(markNumber(game.carboards[i], solutions[i], drawnNumber)){
                 if(cardboadIsSolved(solutions[i])){
-                    sum = sumUnmarkedNumbers(game.carboards[i], solutions[i]);
-                    return sum * drawnNumber;
+                    if(gameMode === GameMode.part1
+                    || gameMode === GameMode.part2 && won.filter(value => !value).length === 1){
+                        sum = sumUnmarkedNumbers(game.carboards[i], solutions[i]);
+                        return sum * drawnNumber;
+                    }
+                    else{
+                        won[i] = true;
+                    }
                 }
             }
         }
     }
 }
 
-loadGameFile().then(game => console.log(`The Game Score is ${getGameScore(game)}`));
+
+loadGameFile().then(game => console.log(`The Game Score is ${getGameScore(game, GameMode.part1)}`));
+loadGameFile().then(game => console.log(`The Game Score is ${getGameScore(game, GameMode.part2)}`));
